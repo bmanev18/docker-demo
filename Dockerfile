@@ -1,10 +1,12 @@
-# Fetch the Java
-FROM openjdk:17-alpine
-# Expose port 8080
-EXPOSE 8080
-# set a docker volume if you want
-VOLUME /backend_volume
-# Add the jar file
-ADD /target/*.jar docker-demo-0.0.1-SNAPSHOT.jar
-# Start the application
-ENTRYPOINT ["java", "-jar", "/docker-demo-0.0.1-SNAPSHOT.jar"]
+FROM maven:3.9.4-eclipse-temurin-17-alpine as build
+RUN mkdir -p /app
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn -B package --file pom.xml -Dskiptests
+
+
+FROM eclipse-temurin:17-alpine
+EXPOSE 8088
+COPY --from=build /app/target/*.jar container-example-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar","container-example-0.0.1-SNAPSHOT.jar"]
