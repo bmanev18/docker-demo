@@ -1,10 +1,10 @@
-package controller;
+package via.doc.dockerdemo.controller;
 
-import model.TeamMember;
+import via.doc.dockerdemo.model.TeamMember;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import service.TeamService;
+import via.doc.dockerdemo.service.TeamService;
 
 @RestController
 public class TeamController {
